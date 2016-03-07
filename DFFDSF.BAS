@@ -1,0 +1,5 @@
+OPEN "TIME.bmp" FOR INPUT AS #1
+INPUT #1, A$
+CLOSE #1
+PRINT A$
+

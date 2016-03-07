@@ -1,0 +1,187 @@
+If you just need a beep in your program, you can use BEEP:
+
+    CLS
+    INPUT "Press Enter to hear a beep", A$
+    BEEP
+
+SOUND lets you play a beep and tell it how high or low the beep will be, and how long it will last. This program makes a 1000Hz beep for about 1 second:
+
+    SOUND 1000, 18
+
+SOUND is good for making sound effects. Here's a bomb dropping:
+
+    FOR I = 4000 TO 1000 STEP -5
+      SOUND I, .1
+    NEXT I
+
+If you want to play a song, PLAY is exactly what you need. Try this:
+
+    PLAY "e8 d8 c8 d8 e8 e8 e4"
+
+PLAY is like a little programming language inside of QBASIC. "e8" means play an eighth note "e". If you are familiar with sheet music, this will make sense. Here's a scale:
+
+    PLAY "c8 d8 e8 f8 g8 a8 b8 > c4"
+
+The ">" greater than sign means "go up one octave". There are many more special commands in PLAY. Check the QBASIC help for a list of all of them.
+
+PLAY and Triplets
+Here's a familiar tune that uses a trick to do triplets.
+
+    PLAY "T180 <d8d8d8 T120 g2>d2"
+    PLAY "T180 c8<b8a8 T120 >g2d4"
+    PLAY "T180 c8<b8a8 T120 >g2d4"
+    PLAY "T180 c8<b8>c8 T120 <a2>"
+
+Since PLAY doesn't do triplets, you have to modify the tempo to get the right rhythm. PLAY begins with a default tempo of "T120" which means 120 quarter notes per minute. In the above song, we switch to T180 which is the triplet tempo for T120. By multiplying our tempo by 1.5, we get the triplet tempo. When the triplets are done, we switch back to the regular tempo. You can see in the above example that we switch back and forth between the main tempo (T120) and the triplet tempo (T180) several times as needed.
+
+As with everything, there's more than one way to do triplets. 8th note triplets can also be called 12th notes, like this:
+
+    PLAY "<d12d12d12g2>d2"
+    PLAY "c12<b12a12>g2d4"
+    PLAY "c12<b12a12>g2d4"
+    PLAY "c12<b12>c12<a2>"
+
+Using this technique, 16th note triplets are 24th notes, etc.... You just multiply the note value by 1.5 instead of changing the tempo.
+
+Each of these techniques has its advantages and disadvantages. The tempo-changing technique uses more space, but the notes retain their values. The 12th note technique is more compact, but not as easy to understand. Which one you use is up to you. Just make sure the next person to read your code understands what you are doing. Comments are a good idea.
+
+
+--------------------------------------------------------------------------------
+
+Chapter 18 - LOCATE
+LOCATE allows you to print in a specific place on the screen.
+
+    CLS
+    LOCATE 5, 10
+    PRINT "Here"
+    LOCATE 20, 70
+    PRINT "There"
+
+The two numbers after LOCATE are the coordinates where the print will be. Just like coordinates in math class, these numbers give the row and the column. The first number in LOCATE is the row, or how far down the screen the print will start. The second number is the column, or how far over the print will start.
+
+Let's use some random numbers, COLOR and LOCATE to make a more interesting version of our first looping program:
+
+    CLS
+    DO
+      Row = INT(RND * 23 + 1)
+      Column = INT(RND * 79 + 1)
+      LOCATE Row, Column
+      Color1 = INT(RND * 15 + 1)
+      COLOR Color1, 0
+      PRINT "Ted was here!";
+    LOOP
+
+Kind of messy, but interesting.
+
+How about a clock?
+
+    CLS
+    DO
+      LOCATE 1, 1
+      PRINT TIME$
+      SLEEP 1
+    LOOP
+
+TIME$ is a special variable that contains the current time. Press Break to stop.
+
+
+--------------------------------------------------------------------------------
+
+Chapter 19 - WIDTH
+Use WIDTH 40 for big text. It changes the entire screen to wide text mode. Use WIDTH 80 to go back to normal size text.
+
+    SCREEN 0
+    WIDTH 40
+    CLS
+    PRINT "Wow!  This is big!"
+    INPUT "Press <Enter> to go back", A$
+    WIDTH 80
+    PRINT "That's more like it."
+
+Unfortunately, you won't see the big text in a window. You'll have to press <Alt>-<Enter> to switch to full-screen mode. Be sure to press <Alt>-<Enter> again to switch back to window mode.
+
+
+--------------------------------------------------------------------------------
+
+Chapter 20 - CHR$
+There are many special symbols and other characters you can display that aren't on the keyboard. Try this:
+
+    CLS
+    PRINT CHR$(1); CHR$(2)
+
+That prints a couple of smiley faces. There are plenty of other characters too. This program will show you many, but not all of them:
+
+    CLS
+    FOR I = 32 to 255
+      PRINT I; CHR$(I); "  ";
+    NEXT I
+
+
+--------------------------------------------------------------------------------
+
+Chapter 21 - Graphics
+So far, we've only been dealing with text (words and numbers). How do we do pictures in QBASIC? First, we need to use SCREEN to change from text mode to graphics mode.
+
+SCREEN
+SCREEN lets you select a "graphics" screen instead of the "text" screen we've been using. This will let you draw pictures. In the next program, we'll use DRAW to draw a square on the screen in SCREEN 12 graphics mode.
+
+    SCREEN 12
+    CLS
+    DRAW "D100 R100 U100 L100"
+
+There are many other SCREEN numbers you can use, but 12 is probably the easiest to work with. It gives you a lot of space and the color numbers are familiar. QBASIC Help explains all the possible values of SCREEN. You can always try them and see what happens.
+
+DRAW
+DRAW is kind of like the turtle in the programming language Logo. With DRAW, you can move around the screen and draw lines along the way. In the above example we used the following DRAW commands:
+
+D100 - Go down 100 units 
+R100 - Go right 100 units 
+U100 - Go up 100 units 
+L100 - Go left 100 units 
+DRAW can do a lot more than that. It is like PLAY. It's a small programming language inside of QBASIC. Look at QBASIC Help for a complete description of everything it can do. Here's a filled in box:
+
+    SCREEN 12
+    CLS
+    DRAW "C15 D100 R100 U100 L100 BF1 P15,15"
+
+"C15" sets the color to bright white. "BF1" moves into the square, then "P15,15" fills it with bright white. Finally, here's something very Logo-like:
+
+    SCREEN 12
+    CLS
+    FOR I = 0 TO 360 STEP 10
+      DRAW "D100 R100 U100 L100 TA" + STR$(I)
+    NEXT I
+
+"TA" means to turn to a specific angle. STR$ converts the value in I to a string. This lets DRAW turn to the angle in the variable I. It's not quite as easy as Logo, but it's still pretty impressive.
+
+LINE
+QBASIC also lets you draw using a coordinate system. It's like drawing graphs on graph paper. Try this:
+
+    SCREEN 12
+    CLS
+    LINE (0, 0)-(320, 240), 15
+
+LINE lets you draw a line between two points. The points are specified in (x, y) coordinates. You may have seen this when learning about graphs in math class. In QBASIC, the coordinates are almost the same. The only thing that is different is the Y coordinate. In QBASIC, the Y coordinate is upside down. "0" is at the top, and bigger numbers go toward the bottom of the screen.
+
+"LINE (0, 0)-(320, 240), 15" draws a line starting at coordinate (0, 0) which is the upper left corner of the screen. The line ends at (320, 240) which is the center of the screen. The last number is the color (15 which is bright white).
+
+Box
+By adding a "B" to the end of a LINE statement, you can draw a box. Try this:
+
+    SCREEN 12
+    CLS
+    LINE (0, 0)-(320, 240), 15, B
+
+The first coordinate is the upper left corner while the second coordinate is the lower right.
+
+Try "BF" instead of "B". Interesting?
+
+CIRCLE
+QBASIC can also draw circles using the CIRCLE statement:
+
+    SCREEN 12
+    CLS
+    CIRCLE (320, 240), 100, 15
+
+The coordinate (320, 240) tells the computer where to put the center of the circle. "100" is the radius, or how big the circle will be. "15" is the color number (bright white again).
+

@@ -1,0 +1,8 @@
+ CLS
+     RANDOMIZE TIMER
+     INPUT "Press ENTER to roll dice...", A$
+     PRINT
+     Die1 = INT(RND * 6 + 1)
+     Die2 = INT(RND * 6 + 1)
+     PRINT "Die 1: "; Die1
+     PRINT "Die 2: "; Die2
